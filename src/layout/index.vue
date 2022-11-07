@@ -1,13 +1,26 @@
 <template>
-  <div class="container py-4 px-3 mx-auto">
-    <h1>Hello, Bootstrap and Vite!</h1>
-    <button class="btn btn-primary">Primary button</button>
-    <router-view></router-view>
+  <div class="my-2 mx-auto">
+    <navbar-component></navbar-component>
+    <div class="row">
+        <div class="col-2">
+            <sidebar-component></sidebar-component>
+        </div>
+        <div class="col-10">
+            <router-view></router-view>
+        </div>
+    </div>
   </div>
 </template>
 
 <script>
-export default {};
+import NavbarComponent from "./navbar.vue";
+import SidebarComponent from "./sidebar.vue";
+export default {
+    components: {
+        NavbarComponent,
+        SidebarComponent
+    },
+};
 </script>
 
 <style></style>

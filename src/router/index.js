@@ -5,12 +5,12 @@ const HomeComponent = () => import('@/views/index.vue');
 const routes = [
   {
     path: "/",
-    redirect: "/home",
+    redirect: "/dashboard",
     component: LayoutComponent,
     children: [
         {
-            path: "/home",
-            name: "home",
+            path: "/dashboard",
+            name: "dashboard",
             component: HomeComponent,
         }
     ],

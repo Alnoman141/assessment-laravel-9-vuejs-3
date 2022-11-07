@@ -1,5 +1,7 @@
 <template>
-    <h2>Welcome</h2>
+    <div id="dashboard">
+        <h2>Please Login to continue <router-link to="/login">Login</router-link></h2>
+    </div>
 </template>
 
 <script>
@@ -8,6 +10,11 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+#dashboard {
+    display: flex;
+    flex-direction: column;
+    place-content: center;
+    height: 90vh;
+}
 </style>

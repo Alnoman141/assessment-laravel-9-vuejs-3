@@ -38,6 +38,16 @@ composer install
 ```
 
 #### Database migration
+create a database and create .env file from .env.example 
+
+``
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=<datbase name>
+DB_USERNAME=<databse user name>
+DB_PASSWORD=<database user password>
+``
 
 ```sh
 php artisan migrate
@@ -47,4 +57,17 @@ php artisan migrate
 
 ```sh
 php artisan db:seed
+```
+
+#### mail configaration
+
+```sh
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=<your mail username>
+MAIL_PASSWORD="<mail passowrd>"
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS="<mail address>"
+MAIL_FROM_NAME="${APP_NAME}"
 ```

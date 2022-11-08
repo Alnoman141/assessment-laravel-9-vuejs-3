@@ -6,7 +6,7 @@
     <router-link to="/users" :class="`bg-dark text-light list-group-item ${activeRoute === '/users' ? 'active' : ''}`" exact
       >Users</router-link
     >
-    <router-link to="/" :class="`bg-dark text-light list-group-item ${activeRoute === '/' ? 'active' : ''}`" exact
+    <router-link to="/customers" :class="`bg-dark text-light list-group-item ${activeRoute === '/customers' ? 'active' : ''}`" exact
       >Customers</router-link
     >
   </div>

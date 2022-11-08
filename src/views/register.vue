@@ -125,7 +125,7 @@ export default {
     },
     isEmpty() {
       let empty;
-      for (var key in this.user) {
+      for (let key in this.user) {
         empty = this.user[key] === "" ? true : false;
       }
       return empty;

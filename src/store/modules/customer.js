@@ -1,30 +1,30 @@
-import { getUsers, login, logout, register } from "@/api/user";
+import { getCustomers, store } from "@/api/customer";
 import { getToken, removeToken, setToken } from "@/utils/auth";
 export default {
   namespaced: true,
   state: {
     token: getToken(),
-    user: {},
-    users: [],
+    customer: {},
+    customers: [],
   },
 
   mutations: {
     SET_TOKEN: (state, token) => {
       state.token = token;
     },
-    SET_USER: (state, user) => {
-      state.user = user;
+    SET_CUSTOMER: (state, customer) => {
+      state.customer = customer;
     },
-    SET_USERS: (state, users) => {
-      state.users = users;
+    SET_CUSTOMERS: (state, customers) => {
+      state.customers = customers;
     }
   },
 
   actions: {
-    // user register
-    register({ state, commit }, data) {
+    // customer store
+    createCustomer({ state, commit }, data) {
       return new Promise((resolve, reject) => {
-        register(data)
+        store(data)
           .then((response) => {
             resolve(response);
           })
@@ -34,13 +34,13 @@ export default {
       });
     },
 
-    // user login
-    login({ state, commit }, user) {
+    // customer login
+    login({ state, commit }, customer) {
       return new Promise((resolve, reject) => {
-        login(user)
+        login(customer)
           .then((response) => {
             const { data } = response;
-            commit("SET_USER", data.user);
+            commit("SET_CUSTOMER", data.customer);
             commit("SET_TOKEN", data.token);
             setToken(data.token);
             resolve(response);
@@ -51,11 +51,11 @@ export default {
       });
     },
 
-    // user logout
+    // customer logout
     logout({ state, commit }) {
       return new Promise((resolve, reject) => {
         logout().then((response) => {
-          commit("SET_USER", {});
+          commit("SET_CUSTOMER", {});
           removeToken();
           commit("SET_TOKEN", "");
           resolve();
@@ -65,12 +65,12 @@ export default {
       });
     },
 
-    // get users info
-    getUsers({ state, commit }) {
+    // get customers info
+    getCustomers({ state, commit }) {
       return new Promise((resolve, reject) => {
-        getUsers().then((response) => {
+        getCustomers().then((response) => {
           const { data } = response;
-          commit("SET_USERS", data.users);
+          commit("SET_CUSTOMERS", data.customers);
           resolve(response);
         }).catch((error) => {
           reject(error);

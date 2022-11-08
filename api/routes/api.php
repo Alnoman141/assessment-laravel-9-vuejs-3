@@ -25,4 +25,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::prefix('users')->group(function () {
         Route::get('/', [\App\Http\Controllers\Api\Auth\AuthController::class, 'index']);
     });
+
+    Route::prefix('customers')->group(function () {
+        Route::get('/', [\App\Http\Controllers\Api\CustomerController::class, 'index']);
+        Route::post('/', [\App\Http\Controllers\Api\CustomerController::class, 'store']);
+        Route::put('/{id}', [\App\Http\Controllers\Api\CustomerController::class, 'update']);
+    });
 });

@@ -107,7 +107,7 @@ class AuthController extends Controller
 
     //    user logout
     public function logout(){
-        auth()->user()->tokens()->where('tokenable_id', auth()->user()->id)->delete();
+        auth()->user()->tokens()->where('tokenable_type', 'App\Models\User')->where('tokenable_id', auth()->user()->id)->delete();
         return response()->json([
             'status_code' => 200,
             'message' => 'Logout successfully',

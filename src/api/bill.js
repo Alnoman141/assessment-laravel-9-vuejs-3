@@ -22,3 +22,10 @@ export function update(data){
         data
     })
 }
+
+export function getAuthCustomerBills(){
+    return request({
+        url: '/auth-customer/bills',
+        method: 'get'
+    })
+}

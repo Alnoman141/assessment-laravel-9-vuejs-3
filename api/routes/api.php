@@ -20,6 +20,8 @@ Route::post('/register', [\App\Http\Controllers\Api\Auth\AuthController::class, 
 
 Route::post('/login', [\App\Http\Controllers\Api\Auth\AuthController::class, 'login']);
 
+Route::post('/customer/login', [\App\Http\Controllers\Api\CustomerController::class, 'login']);
+
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/logout', [\App\Http\Controllers\Api\Auth\AuthController::class, 'logout']);
     Route::prefix('users')->group(function () {
@@ -37,4 +39,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::post('/', [\App\Http\Controllers\Api\CustomerBillController::class, 'store']);
         Route::put('/{id}', [\App\Http\Controllers\Api\CustomerBillController::class, 'update']);
     });
+});
+
+Route::group(['middleware' => 'auth:customer'], function () {
+    Route::post('/customer/logout', [\App\Http\Controllers\Api\CustomerController::class, 'logout']);
+
+    Route::get('/auth-customer/bills', [\App\Http\Controllers\Api\CustomerBillController::class, 'getBills']);
 });

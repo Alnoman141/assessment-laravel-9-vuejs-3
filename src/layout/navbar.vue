@@ -28,12 +28,17 @@
             <a class="nav-link" aria-current="page" href="#">Home</a>
           </li>
           <li class="nav-item">
-            <router-link v-if="!$store.state.userStore.token" class="nav-link" aria-current="page" to="/register"
+            <router-link v-if="!$store.state.userStore.token && !$store.state.customerStore.token" class="nav-link" aria-current="page" to="/register"
               >Register</router-link
             >
           </li>
           <li class="nav-item" v-if="$store.state.userStore.token">
             <a @click.prevent="logout" class="nav-link" href="#"
+              >Logout</a
+            >
+          </li>
+          <li class="nav-item" v-if="$store.state.customerStore.token">
+            <a @click.prevent="logoutCustomer" class="nav-link" href="#"
               >Logout</a
             >
           </li>
@@ -49,6 +54,11 @@ export default {
   methods: {
     logout() {
       this.$store.dispatch("userStore/logout").then(() => {
+        this.$router.push("/login");
+      });
+    },
+    logoutCustomer() {
+      this.$store.dispatch("customerStore/logout").then(() => {
         this.$router.push("/login");
       });
     },

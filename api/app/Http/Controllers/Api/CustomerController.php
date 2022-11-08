@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -55,7 +56,7 @@ class CustomerController extends Controller
             $customer->address = $request->address;
             try {
                 $customer->save();
-                return response()->json(['success' => 'customer added successful', 'user' => $customer], 200);
+                return response()->json(['success' => 'customer added successful', 'customer' => $customer], 200);
             } catch (\Exception $ex) {
                 return response()->json(['error' => $ex->getMessage()], 403);
             }
@@ -105,6 +106,43 @@ class CustomerController extends Controller
     public function destroy(Customer $customer)
     {
         //
+    }
+
+//    customer login
+    public function login(Request $request){
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'email' => 'required|email',
+                'password' => 'required'
+            ]
+        );
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 403);
+        } else {
+            if(!Auth::attempt($request->only(['email', 'password']))){
+                return response()->json([
+                    'message' => 'Email & Password does not match with our record.',
+                ], 401);
+            }
+
+            $customer = Customer::where('email', $request->email)->first();
+
+            return response()->json([
+                'message' => 'Customer Logged In Successfully',
+                'token' => $customer->createToken("API TOKEN")->plainTextToken,
+                'customer' => $customer
+            ], 200);
+        }
+    }
+
+    //    customer logout
+    public function logout(){
+        auth()->guard('customer')->user()->tokens()->where('tokenable_type', 'App\Models\Customer')->where('tokenable_id', auth()->user()->id)->delete();
+        return response()->json([
+            'status_code' => 200,
+            'message' => 'Logout successfully',
+        ], 200);
     }
 
     // getValidationRules is used for validate all request

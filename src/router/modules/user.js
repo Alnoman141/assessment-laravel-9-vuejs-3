@@ -9,7 +9,8 @@ const userRoutes = {
         {
             path: '',
             name: 'userList',
-            component: UserListComponent
+            component: UserListComponent,
+            meta: { requiresAuth: true }
         },
     ]
 }

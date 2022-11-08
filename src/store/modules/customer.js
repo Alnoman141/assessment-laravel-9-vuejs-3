@@ -1,9 +1,9 @@
-import { getCustomers, store } from "@/api/customer";
-import { getToken, removeToken, setToken } from "@/utils/auth";
+import { getCustomers, store, login, logout } from "@/api/customer";
+import { getCustomerToken, removeCustomerToken, setCustomerToken } from "@/utils/auth";
 export default {
   namespaced: true,
   state: {
-    token: getToken(),
+    token: getCustomerToken(),
     customer: {},
     customers: [],
   },
@@ -42,7 +42,7 @@ export default {
             const { data } = response;
             commit("SET_CUSTOMER", data.customer);
             commit("SET_TOKEN", data.token);
-            setToken(data.token);
+            setCustomerToken(data.token);
             resolve(response);
           })
           .catch((error) => {
@@ -56,7 +56,7 @@ export default {
       return new Promise((resolve, reject) => {
         logout().then((response) => {
           commit("SET_CUSTOMER", {});
-          removeToken();
+          removeCustomerToken();
           commit("SET_TOKEN", "");
           resolve();
         }).catch((error) => {

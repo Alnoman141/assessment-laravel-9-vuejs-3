@@ -24,6 +24,11 @@ class CustomerBillController extends Controller
         return response()->json(['bills' => $bills], 200);
     }
 
+    public function getBills(){
+        $bills = CustomerBill::where('customer_id', auth()->guard('customer')->user()->id)->with('customer')->get();
+        return response()->json(['bills' => $bills], 200);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

@@ -1,12 +1,13 @@
-import { createRouter, createWebHistory } from "vue-router";
 import store from "@/store";
-import userRoutes from './modules/user';
-import customerRoutes from './modules/customer';
+import { createRouter, createWebHistory } from "vue-router";
 import billRoutes from './modules/bill';
+import customerRoutes from './modules/customer';
+import userRoutes from './modules/user';
 
 const LayoutComponent = () => import("@/layout/index.vue");
 const HomeComponent = () => import("@/views/index.vue");
 const LoginComponent = () => import("@/views/login.vue");
+const CustomerLoginComponent = () => import("@/views/customers/login.vue");
 const RegisterComponent = () => import("@/views/register.vue");
 
 const routes = [
@@ -14,6 +15,12 @@ const routes = [
     path: "/login",
     name: "login",
     component: LoginComponent,
+    meta: { requiresAuth: false }
+  },
+  {
+    path: "/customer/login",
+    name: "customerLogin",
+    component: CustomerLoginComponent,
     meta: { requiresAuth: false }
   },
   {
@@ -50,7 +57,17 @@ const whiteList = ['/login', '/register'] // no redirect whitelist
 // router middleware gaurd
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
+    console.log('requiresAuth');
     if (!store.state.userStore.token) {
+      next({
+        name: "login",
+      });
+    } else {
+      next();
+    }
+  } else if (to.matched.some((record) => record.meta.requiresCustomerAuth)) {
+    console.log('requiresCustomerAuth');
+    if (!store.state.customerStore.token) {
       next({
         name: "login",
       });

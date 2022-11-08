@@ -2,7 +2,7 @@
   <div class="bg-dark">
     <div id="login">
       <div class="card p-0 text-center">
-        <div class="card-header py-3">Login</div>
+        <div class="card-header py-3">Customer Login</div>
         <div class="card-body py-3">
           <form>
             <div v-if="message" class="alert alert-danger" role="alert">
@@ -14,7 +14,7 @@
               >
               <div class="col-sm-8">
                 <input
-                  v-model="user.email"
+                  v-model="customer.email"
                   type="email"
                   class="form-control"
                   id="inputEmail3"
@@ -27,7 +27,7 @@
               >
               <div class="col-sm-8">
                 <input
-                  v-model="user.password"
+                  v-model="customer.password"
                   type="password"
                   class="form-control"
                   id="inputPassword3"
@@ -45,14 +45,8 @@
             <router-link
               class="d-inline nav-link mt-3 btn btn-primary btn-sm py-2 px-5 text-light"
               aria-current="page"
-              to="/register"
-              >Register</router-link
-            >
-            <router-link
-              class="d-inline nav-link mt-3 btn btn-primary btn-sm py-2 mx-5 px-3 text-light"
-              aria-current="page"
-              to="/customer/login"
-              >Customer Login</router-link
+              to="/login"
+              >Admin Login</router-link
             >
           </form>
         </div>
@@ -67,7 +61,7 @@ export default {
   name: "Login",
   data() {
     return {
-      user: {
+      customer: {
         email: "",
         password: "",
       },
@@ -75,22 +69,22 @@ export default {
     };
   },
   created() {
-    if (this.$store.state.userStore.token) {
+    if (this.$store.state.customerStore.token) {
       this.$router.push("/");
     }
   },
   methods: {
     login() {
-      if (!validEmail(this.user.email)) {
+      if (!validEmail(this.customer.email)) {
         this.message = "Please enter a valid email";
-      } else if (this.user.email === "" || this.user.password === "") {
+      } else if (this.customer.email === "" || this.customer.password === "") {
         this.message = "Please fill all the fields";
       } else {
         this.$store
-          .dispatch("userStore/login", this.user)
+          .dispatch("customerStore/login", this.customer)
           .then((res) => {
             if (res.status === 200) {
-              this.$router.push("/dashboard");
+              this.$router.push("/customers/dashboard");
             }
           })
           .catch((err) => {

@@ -15,17 +15,17 @@ export function store(data){
     })
 }
 
-// export function login(data){
-//     return request({
-//         url: '/login',
-//         method: 'post',
-//         data
-//     })
-// }
+export function login(data){
+    return request({
+        url: '/customer/login',
+        method: 'post',
+        data
+    })
+}
 
-// export function logout(){
-//     return request({
-//         url: '/logout',
-//         method: 'post'
-//     })
-// }
+export function logout(){
+    return request({
+        url: '/customer/logout',
+        method: 'post'
+    })
+}

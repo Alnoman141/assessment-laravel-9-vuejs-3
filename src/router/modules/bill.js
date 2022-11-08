@@ -9,7 +9,8 @@ const userRoutes = {
         {
             path: '',
             name: 'billList',
-            component: BillListComponent
+            component: BillListComponent,
+            meta: { requiresAuth: true }
         },
     ]
 }

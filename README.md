@@ -10,16 +10,16 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 ## Technology uses
 
 ### Frontend
--nodejs (latest)
--npm (latest)
--vuejs 3
--vuex (latest)
--vue-router 4
--vitejs
+- nodejs (latest)
+- npm (latest)
+- vuejs 3
+- vuex (latest)
+- vue-router 4
+- vitejs
 
 ### Backend
--PHP 8.1
--Laravel 9
+- PHP 8.1
+- Laravel 9
 
 
 ## Setup instruction

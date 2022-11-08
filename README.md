@@ -53,7 +53,7 @@ from [root/api] folder run those command
 composer install
 ```
 
-#### Database migration
+#### Database connecton
 create a database and create .env file from .env.example 
 
 ```
@@ -65,7 +65,7 @@ DB_USERNAME=<databse user name>
 DB_PASSWORD=<database user password>
 
 ```
-
+#### Database migration
 ```sh
 php artisan migrate
 ```

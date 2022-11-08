@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import { validEmail } from "@/utils/validate";
+import { validEmail, isEmpty } from "@/utils/validate";
 export default {
   name: "Register",
   data() {
@@ -99,7 +99,7 @@ export default {
   },
   methods: {
     register() {
-      if (this.isEmpty()) {
+      if (isEmpty(this.user)) {
         this.message = {
           type: "danger",
           text: "Please fill all the fields",
@@ -122,13 +122,6 @@ export default {
         };
         this.$router.push("/login");
       }
-    },
-    isEmpty() {
-      let empty;
-      for (let key in this.user) {
-        empty = this.user[key] === "" ? true : false;
-      }
-      return empty;
     },
   },
 };

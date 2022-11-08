@@ -31,4 +31,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::post('/', [\App\Http\Controllers\Api\CustomerController::class, 'store']);
         Route::put('/{id}', [\App\Http\Controllers\Api\CustomerController::class, 'update']);
     });
+
+    Route::prefix('customer-bills')->group(function () {
+        Route::get('/', [\App\Http\Controllers\Api\CustomerBillController::class, 'index']);
+        Route::post('/', [\App\Http\Controllers\Api\CustomerBillController::class, 'store']);
+        Route::put('/{id}', [\App\Http\Controllers\Api\CustomerBillController::class, 'update']);
+    });
 });

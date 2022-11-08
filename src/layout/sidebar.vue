@@ -9,6 +9,9 @@
     <router-link to="/customers" :class="`bg-dark text-light list-group-item ${activeRoute === '/customers' ? 'active' : ''}`" exact
       >Customers</router-link
     >
+    <router-link to="/bills" :class="`bg-dark text-light list-group-item ${activeRoute === '/bills' ? 'active' : ''}`" exact
+      >Bills</router-link
+    >
   </div>
 </template>
 

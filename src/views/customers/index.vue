@@ -29,9 +29,6 @@
           <td>
             <button
               class="btn btn-primary btn-sm me-2"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
-              @click.prevent="showEditModal(customer)"
             >
               Edit
             </button>

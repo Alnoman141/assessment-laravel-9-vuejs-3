@@ -33,6 +33,7 @@ export default {
         this.getUsers();
     },
     methods: {
+        // Get all users
         getUsers() {
             this.$store.dispatch('userStore/getUsers').then(({ data }) => {
                 this.users = data.users;

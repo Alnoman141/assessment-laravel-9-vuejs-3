@@ -1,5 +1,6 @@
 import request from '@/utils/request';
 
+// get all the customers info
 export function getCustomers(){
     return request({
         url: '/customers',
@@ -7,6 +8,7 @@ export function getCustomers(){
     })
 }
 
+// store customer
 export function store(data){
     return request({
         url: '/customers',
@@ -15,6 +17,7 @@ export function store(data){
     })
 }
 
+// customer login
 export function login(data){
     return request({
         url: '/customer/login',
@@ -23,6 +26,7 @@ export function login(data){
     })
 }
 
+// customer logout
 export function logout(){
     return request({
         url: '/customer/logout',

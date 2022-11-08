@@ -24,6 +24,7 @@ class CustomerBillController extends Controller
         return response()->json(['bills' => $bills], 200);
     }
 
+    // get auth customer bills
     public function getBills(){
         $bills = CustomerBill::where('customer_id', auth()->guard('customer')->user()->id)->with('customer')->get();
         return response()->json(['bills' => $bills], 200);
@@ -56,13 +57,7 @@ class CustomerBillController extends Controller
             return response()->json(['errors' => $validator->errors()], 403);
         } else {
             $customerBill = new CustomerBill();
-
-            $customerBill->customer_id = $request->customer_id;
-            $customerBill->user_id = Auth::id();
-            $customerBill->amount = $request->amount;
-            $customerBill->bill_month = $request->bill_month;
-            $customerBill->bill_year = $request->bill_year;
-            $customerBill->status = $request->status;
+            $this->saveData($request, $customerBill);
             try {
                 $customerBill->save();
                 $customer = Customer::find($request->customer_id);
@@ -72,6 +67,16 @@ class CustomerBillController extends Controller
                 return response()->json(['error' => $ex->getMessage()], 403);
             }
         }
+    }
+
+    // save customer bill data
+    public function saveData($request, $customerBill){
+        $customerBill->customer_id = $request->customer_id;
+        $customerBill->user_id = Auth::id();
+        $customerBill->amount = $request->amount;
+        $customerBill->bill_month = $request->bill_month;
+        $customerBill->bill_year = $request->bill_year;
+        $customerBill->status = $request->status;
     }
 
     /**
@@ -107,14 +112,8 @@ class CustomerBillController extends Controller
     {
         $bill = CustomerBill::find($request->id);
         if(isset($bill)){
-            $bill->customer_id = $request->customer_id;
-            $bill->user_id = Auth::id();
-            $bill->amount = $request->amount;
-            $bill->bill_month = $request->bill_month;
-            $bill->bill_year = $request->bill_year;
-            $bill->status = $request->status;
+            $this->saveData($request, $bill);
             $bill->save();
-
             return response()->json(['success' => 'customer bill updated successful', 'user' => $customerBill], 200);
         } else {
             return response()->json(['error' => 'Requested bill not found'], 404);

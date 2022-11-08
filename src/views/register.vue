@@ -98,6 +98,7 @@ export default {
     }
   },
   methods: {
+    // user register
     register() {
       if (isEmpty(this.user)) {
         this.message = {

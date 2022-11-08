@@ -74,6 +74,7 @@ export default {
     }
   },
   methods: {
+    // customer login
     login() {
       if (!validEmail(this.customer.email)) {
         this.message = "Please enter a valid email";

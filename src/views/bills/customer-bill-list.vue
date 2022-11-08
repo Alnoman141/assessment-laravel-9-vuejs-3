@@ -78,12 +78,14 @@ export default {
     this.getBills();
   },
   methods: {
+    // get auth customers bills
     getBills() {
       this.$store.dispatch("billStore/getAuthCustomerBills").then(({ data }) => {
         this.bills = data.bills;
         this.allBill = data.bills;
       });
     },
+    // get bills by filter
     getBillsByFilter(){
         if(this.filter_value == 'all'){
             this.bills = this.allBill;

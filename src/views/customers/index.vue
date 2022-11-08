@@ -116,11 +116,13 @@ export default {
     this.getCustomers();
   },
   methods: {
+    // get all customers
     getCustomers() {
       this.$store.dispatch("customerStore/getCustomers").then(({ data }) => {
         this.customers = data.customers;
       });
     },
+    // create customer
     createCustomer() {
       if (
         this.customer.name == "" ||
@@ -154,9 +156,12 @@ export default {
           });
       }
     },
+    // show customer edit modal
     showEditModal(customer) {
       this.customer = customer;
     },
+
+    // clear form
     clearForm() {
       this.customer = {
         name: "",

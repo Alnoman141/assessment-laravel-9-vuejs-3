@@ -164,17 +164,20 @@ export default {
     this.getCustomers();
   },
   methods: {
+    // get all bills
     getBills() {
       this.$store.dispatch("billStore/getBills").then(({ data }) => {
         this.bills = data.bills;
         this.allBill = data.bills;
       });
     },
+    // get all customers
     getCustomers() {
       this.$store.dispatch("customerStore/getCustomers").then(({ data }) => {
         this.customers = data.customers;
       });
     },
+    // bill filter
     getBillsByFilter(){
         if(this.filter_value == 'all'){
             this.bills = this.allBill;
@@ -182,6 +185,7 @@ export default {
             this.bills = _.filter(this.allBill, {status: this.filter_value});
         }
     },
+    // create bill
     createBill() {
       this.bill.bill_month = this.bill.bill_month_year.split("-")[1];
       this.bill.bill_year = this.bill.bill_month_year.split("-")[0];
@@ -204,6 +208,7 @@ export default {
           });
       }
     },
+    // load selected bill for update
     updateBill(bill) {
       this.bill = {
         id: bill.id,
@@ -215,6 +220,7 @@ export default {
         status: bill.status,
       };
     },
+    // clear bill form
     clearForm() {
       this.bill = {
         customer_id: "",
@@ -225,6 +231,7 @@ export default {
         status: "due",
       };
     },
+    // save updated bill
     saveUpdatedBill() {
       this.bill.bill_month = this.bill.bill_month_year.split("-")[1];
       this.bill.bill_year = this.bill.bill_month_year.split("-")[0];

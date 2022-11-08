@@ -108,7 +108,7 @@ class CustomerController extends Controller
         //
     }
 
-//    customer login
+    //    customer login
     public function login(Request $request){
         $validator = Validator::make(
             $request->all(),

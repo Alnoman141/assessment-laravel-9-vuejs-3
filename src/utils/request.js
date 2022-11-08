@@ -6,6 +6,8 @@ const service = axios.create({
     // withCredentials: true, // send cookies when cross-domain requests
     // timeout: 5000, // request timeout
 })
+
+// customer authentification routes
 const customerAuthRoutes =  ['/customer/logout', '/auth-customer/bills']
 
 // request interceptor

@@ -1,5 +1,6 @@
 import request from '@/utils/request';
 
+// get all the bills info
 export function getBills(){
     return request({
         url: '/customer-bills',
@@ -7,6 +8,7 @@ export function getBills(){
     })
 }
 
+// store bill
 export function store(data){
     return request({
         url: '/customer-bills',
@@ -15,6 +17,7 @@ export function store(data){
     })
 }
 
+// update bill
 export function update(data){
     return request({
         url: '/customer-bills/' + data.id,
@@ -23,6 +26,7 @@ export function update(data){
     })
 }
 
+// get logedin customer's bills info
 export function getAuthCustomerBills(){
     return request({
         url: '/auth-customer/bills',

@@ -80,6 +80,7 @@ export default {
     }
   },
   methods: {
+    // user login
     login() {
       if (!validEmail(this.user.email)) {
         this.message = "Please enter a valid email";

@@ -2,6 +2,17 @@
   <div id="app">
     <div class="">
       <h3 class="my-3">Customer List</h3>
+      <select
+        v-model="filter_value"
+        class="form-select d-iniline-block w-25"
+        aria-label="Default select example"
+        @change="getBillsByFilter"
+      >
+        <option selected disabled value="">Filter</option>
+        <option value="due">Due</option>
+        <option value="paid">Paid</option>
+        <option value="all">All</option>
+      </select>
       <button
         class="btn btn-primary btn-sm d-block ms-auto me-3"
         data-bs-toggle="modal"
@@ -40,7 +51,7 @@
               data-bs-target="#exampleModal"
               @click="updateBill(bill)"
             >
-                Update
+              Update
             </button>
           </td>
         </tr>
@@ -60,9 +71,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">
-            Customer Bill
-          </h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Customer Bill</h1>
           <button
             type="button"
             class="btn-close"
@@ -111,6 +120,7 @@
 <script>
 import FormComponent from "./components/FormComponent.vue";
 import { isEmpty } from "@/utils/validate";
+import _ from "lodash";
 export default {
   components: {
     FormComponent,
@@ -119,6 +129,8 @@ export default {
     return {
       customers: [],
       bills: [],
+      allBill: [],
+      filter_value: "",
       bill: {
         customer_id: "",
         bill_month: "",
@@ -155,6 +167,7 @@ export default {
     getBills() {
       this.$store.dispatch("billStore/getBills").then(({ data }) => {
         this.bills = data.bills;
+        this.allBill = data.bills;
       });
     },
     getCustomers() {
@@ -162,66 +175,78 @@ export default {
         this.customers = data.customers;
       });
     },
-    createBill(){
-        this.bill.bill_month = this.bill.bill_month_year.split('-')[1];
-        this.bill.bill_year = this.bill.bill_month_year.split('-')[0];
-        if (isEmpty(this.bill)) {
-            this.message.type = "danger";
-            this.message.text = "Please fill all the fields";
+    getBillsByFilter(){
+        if(this.filter_value == 'all'){
+            this.bills = this.allBill;
         } else {
-            this.$store.dispatch('billStore/createBill', this.bill).then(({ data }) => {
-                this.message.type = "success";
-                this.message.text = 'Bill created successfully';
-                this.getBills();
-                this.clearForm();
-                document.getElementById('closeModal').click();
-            }).catch(({ response }) => {
-                this.message.type = "danger";
-                this.message.text = response.data.message;
-            });
+            this.bills = _.filter(this.allBill, {status: this.filter_value});
         }
     },
-    updateBill(bill){
-        this.bill = {
-            id: bill.id,
-            customer_id: bill.customer_id,
-            bill_month: bill.bill_month,
-            bill_year: bill.bill_year,
-            amount: bill.amount,
-            bill_month_year: `${bill.bill_year}-${bill.bill_month}`,
-            status: bill.status,
-        };
-
-    },
-    clearForm(){
-        this.bill = {
-            customer_id: "",
-            bill_month: "",
-            bill_year: "",
-            amount: "",
-            bill_month_year: "",
-            status: "due",
-        };
-    },
-    saveUpdatedBill(){
-        this.bill.bill_month = this.bill.bill_month_year.split('-')[1];
-        this.bill.bill_year = this.bill.bill_month_year.split('-')[0];
-        if (isEmpty(this.bill)) {
+    createBill() {
+      this.bill.bill_month = this.bill.bill_month_year.split("-")[1];
+      this.bill.bill_year = this.bill.bill_month_year.split("-")[0];
+      if (isEmpty(this.bill)) {
+        this.message.type = "danger";
+        this.message.text = "Please fill all the fields";
+      } else {
+        this.$store
+          .dispatch("billStore/createBill", this.bill)
+          .then(({ data }) => {
+            this.message.type = "success";
+            this.message.text = "Bill created successfully";
+            this.getBills();
+            this.clearForm();
+            document.getElementById("closeModal").click();
+          })
+          .catch(({ response }) => {
             this.message.type = "danger";
-            this.message.text = "Please fill all the fields";
-        } else {
-            this.$store.dispatch('billStore/updateBill', this.bill).then(({ data }) => {
-                this.message.type = "success";
-                this.message.text = 'Bill updated successfully';
-                this.getBills();
-                this.clearForm();
-                document.getElementById('closeModal').click();
-            }).catch(({ response }) => {
-                this.message.type = "danger";
-                this.message.text = response.data.message;
-            });
-        }
-    }
+            this.message.text = response.data.message;
+          });
+      }
+    },
+    updateBill(bill) {
+      this.bill = {
+        id: bill.id,
+        customer_id: bill.customer_id,
+        bill_month: bill.bill_month,
+        bill_year: bill.bill_year,
+        amount: bill.amount,
+        bill_month_year: `${bill.bill_year}-${bill.bill_month}`,
+        status: bill.status,
+      };
+    },
+    clearForm() {
+      this.bill = {
+        customer_id: "",
+        bill_month: "",
+        bill_year: "",
+        amount: "",
+        bill_month_year: "",
+        status: "due",
+      };
+    },
+    saveUpdatedBill() {
+      this.bill.bill_month = this.bill.bill_month_year.split("-")[1];
+      this.bill.bill_year = this.bill.bill_month_year.split("-")[0];
+      if (isEmpty(this.bill)) {
+        this.message.type = "danger";
+        this.message.text = "Please fill all the fields";
+      } else {
+        this.$store
+          .dispatch("billStore/updateBill", this.bill)
+          .then(({ data }) => {
+            this.message.type = "success";
+            this.message.text = "Bill updated successfully";
+            this.getBills();
+            this.clearForm();
+            document.getElementById("closeModal").click();
+          })
+          .catch(({ response }) => {
+            this.message.type = "danger";
+            this.message.text = response.data.message;
+          });
+      }
+    },
   },
 };
 </script>

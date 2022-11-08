@@ -1,19 +1,34 @@
 <template>
   <div class="sidebar list-group rounded-0">
-    <router-link to="/" class="bg-dark text-light list-group-item active"
-      >Dashboard</router-link
+    <router-link to="/" :class="`bg-dark text-light list-group-item ${activeRoute === '/dashboard' ? 'active' : ''}`" exact>
+      Dashboard</router-link
     >
-    <router-link to="/" class="bg-dark text-light list-group-item"
+    <router-link to="/users" :class="`bg-dark text-light list-group-item ${activeRoute === '/users' ? 'active' : ''}`" exact
       >Users</router-link
     >
-    <router-link to="/" class="bg-dark text-light list-group-item"
+    <router-link to="/" :class="`bg-dark text-light list-group-item ${activeRoute === '/' ? 'active' : ''}`" exact
       >Customers</router-link
     >
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  name: "SidebarComponent",
+  data() {
+    return {
+      activeRoute: "",
+    };
+  },
+  created() {
+    this.activeRoute = this.$route.path;
+  },
+  watch: {
+    $route() {
+      this.activeRoute = this.$route.path;
+    },
+  },
+};
 </script>
 
 <style scoped>

@@ -1,12 +1,17 @@
 <template>
     <div id="dashboard">
-        <h2>Please Login to continue <router-link to="/login">Login</router-link></h2>
+        <div v-if="$store.state.userStore.token" class="authorized">
+            <h2>Welcome, {{ $store.state.userStore.user.name }}</h2>
+        </div>
+        <div v-else class="unauthorized">
+            <h2>Please Login to continue <router-link to="/login">Login</router-link></h2>
+        </div>
     </div>
 </template>
 
 <script>
 export default {
-
+    
 }
 </script>
 

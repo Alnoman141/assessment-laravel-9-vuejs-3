@@ -28,10 +28,14 @@
             <a class="nav-link" aria-current="page" href="#">Home</a>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" aria-current="page" to="/register">Register</router-link>
+            <router-link v-if="!$store.state.userStore.token" class="nav-link" aria-current="page" to="/register"
+              >Register</router-link
+            >
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Logout</a>
+          <li class="nav-item" v-if="$store.state.userStore.token">
+            <a @click.prevent="logout" class="nav-link" href="#"
+              >Logout</a
+            >
           </li>
         </ul>
       </div>
@@ -40,7 +44,16 @@
 </template>
 
 <script>
-export default {};
+export default {
+  name: "Navbar",
+  methods: {
+    logout() {
+      this.$store.dispatch("userStore/logout").then(() => {
+        this.$router.push("/login");
+      });
+    },
+  },
+};
 </script>
 
 <style></style>
